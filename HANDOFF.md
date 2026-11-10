@@ -134,7 +134,7 @@ Lint decisions (all documented in `eslint.config.mjs` or next to the code):
 - Test fixtures are exempt from `no-hardcoded-secrets`.
 
 Verified:
-- `npm run build` and `npm run lint` pass (lint exit 0). `npm test` passes: 55 unit tests with the SDK mocked (2026-11-10).
+- `npm run build` and `npm run lint` pass (lint exit 0). `npm test` passes: 58 unit tests with the SDK mocked (2026-11-10).
 - In `docker.n8n.io/n8nio/n8n:2.45.7` under OrbStack: `@1password/sdk` 0.5.0 installs with `npm ci --omit=dev --ignore-scripts` and loads (WASM fine). The packed tarball installs the same way; both nodes and the credential load; the credential test reaches the SDK and returns its "invalid service account token" error for a dummy token.
 - n8n 2.45.7 started with the package via `N8N_CUSTOM_EXTENSIONS` registered `onePasswordSecret`, `onePasswordHttpRequest` and `onePasswordServiceAccountApi` with no load errors.
 
@@ -146,8 +146,12 @@ Not verified yet:
 
 Packaging note: `n8n-workflow` is a peer dependency (`*`), as in n8n's template. npm installs it automatically, so `npm ci` in the nodes folder adds `n8n-workflow` and its tree (including `isolated-vm`). The n8n repo's lockfile already contains both through other packages, so this adds nothing new, but the node will load that copy of `n8n-workflow`, not n8n's own.
 
+Repository (2026-11-10): `https://github.com/Ka-Chava/n8n-nodes-kachava-1password`, public (the user chose public, which npm provenance needs). `main` pushed over HTTPS with the `oliver-kachava` gh login (the local SSH key belongs to a personal account without Ka-Chava access). CI passed on `8c6029f`. No tags, nothing published to npm.
+
+Security fixes after an automated review (commit `8c6029f`): the HTTP node sets `disableFollowRedirect`, because n8n only manages the `Authorization` header on a cross-origin redirect and a custom secret header would otherwise reach the new host. Redaction now also covers the base64 basic auth value and JSON-escaped secrets, and error bodies are redacted before serializing.
+
 Next steps:
-1. User: review the code; create the GitHub repo; decide on the package name and the runtime dependency exception.
+1. User: review the code; decide on the package name and the runtime dependency exception.
 2. User: create a 1Password test vault and a test service account; run a live check (`npm run dev`, or the smoke tests).
 3. Commit, push, set up npm trusted publishing, tag 0.1.0. Only with explicit approval.
 4. In `~/Sites/n8n`: add the exact version to `community-packages/package.json`, regenerate the lock, run `scripts/check-community-packages.py` and its tests, and extend `smoke/` to resolve a dummy secret on every `N8N_VERSION` bump.
