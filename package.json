@@ -1,0 +1,62 @@
+{
+	"name": "n8n-nodes-kachava-1password",
+	"version": "0.1.0",
+	"description": "n8n nodes that read secrets from 1Password with a vault-scoped service account, so workflows never hold the raw credential in n8n.",
+	"license": "MIT",
+	"homepage": "https://github.com/Ka-Chava/n8n-nodes-kachava-1password#readme",
+	"keywords": [
+		"n8n-community-node-package",
+		"1password",
+		"secrets"
+	],
+	"author": {
+		"name": "Oliver Haroun",
+		"email": "oliver.haroun@kachava.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Ka-Chava/n8n-nodes-kachava-1password.git"
+	},
+	"engines": {
+		"node": ">=22"
+	},
+	"scripts": {
+		"build": "n8n-node build",
+		"build:watch": "tsc --watch",
+		"dev": "n8n-node dev",
+		"lint": "n8n-node lint",
+		"lint:fix": "n8n-node lint --fix",
+		"test": "vitest run",
+		"release": "n8n-node release",
+		"prepublishOnly": "n8n-node prerelease"
+	},
+	"files": [
+		"dist"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"strict": false,
+		"credentials": [
+			"dist/credentials/OnePasswordServiceAccountApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/OnePasswordSecret/OnePasswordSecret.node.js",
+			"dist/nodes/OnePasswordHttpRequest/OnePasswordHttpRequest.node.js"
+		]
+	},
+	"dependencies": {
+		"@1password/sdk": "0.5.0"
+	},
+	"devDependencies": {
+		"@n8n/node-cli": "0.55.6",
+		"eslint": "9.32.0",
+		"n8n-workflow": "2.45.4",
+		"prettier": "3.6.2",
+		"release-it": "^21.1.0",
+		"typescript": "5.9.2",
+		"vitest": "^3.2.4"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
+}
