@@ -16,6 +16,10 @@ export function redactString(text: string, secrets: string[]): string {
 		// Also catch the URL-encoded form, for secrets placed in query strings.
 		const encoded = encodeURIComponent(secret);
 		if (encoded !== secret) out = out.split(encoded).join(REDACTED);
+		// And the JSON-escaped form, for secrets containing quotes, backslashes or
+		// control characters inside serialized JSON.
+		const jsonEscaped = JSON.stringify(secret).slice(1, -1);
+		if (jsonEscaped !== secret) out = out.split(jsonEscaped).join(REDACTED);
 	}
 	return out;
 }

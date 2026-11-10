@@ -22,8 +22,9 @@ Calls an HTTP API and places a secret from 1Password into the request at run tim
 - **Authentication:** header (name and prefix, for example `Authorization: Bearer <secret>`), query parameter, basic auth, or none.
 - **Extra headers and query parameters:** any value that starts with `op://` is read from 1Password.
 - **Body:** optional JSON body for POST, PUT, PATCH and DELETE.
+- **Redirects are never followed**, so a redirect to another host cannot carry the secret with it. A 3xx response is reported as an error; use the final URL instead.
 - **Output:** the response body. A JSON array becomes one item per element. Turn on "Include Status and Headers" to get `statusCode`, `headers` and `body`.
-- **Redaction:** resolved secrets (and their URL-encoded form) are replaced with `[redacted by 1Password node]` in the output and in error messages, in case an API echoes them back. Secrets shorter than 6 characters (such as a short PIN) are not redacted, to avoid mangling unrelated output.
+- **Redaction:** resolved secrets (and their URL-encoded and JSON-escaped forms, plus the encoded basic auth header) are replaced with `[redacted by 1Password node]` in the output and in error messages, in case an API echoes them back. Secrets shorter than 6 characters (such as a short PIN) are not redacted, to avoid mangling unrelated output.
 
 ### 1Password Secret
 

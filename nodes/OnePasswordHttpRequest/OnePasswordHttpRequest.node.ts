@@ -382,9 +382,9 @@ export class OnePasswordHttpRequest implements INodeType {
 				const description =
 					responseBody === undefined
 						? undefined
-						: redactString(
-								typeof responseBody === 'string' ? responseBody : JSON.stringify(responseBody),
-								secrets,
+						: (typeof responseBody === 'string'
+								? redactString(responseBody, secrets)
+								: redactString(JSON.stringify(redactValue(responseBody, secrets)), secrets)
 							).slice(0, 2000);
 				const errorObject: JsonObject = { message };
 				if (status !== undefined) errorObject.httpCode = String(status);

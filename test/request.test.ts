@@ -33,6 +33,7 @@ describe('buildRequest', () => {
 		const { options, secrets: used } = await buildRequest(spec({}), resolver);
 		expect(options.headers).toEqual({ Authorization: 'Bearer api-key-111111' });
 		expect(options.returnFullResponse).toBe(true);
+		expect(options.disableFollowRedirect).toBe(true);
 		expect(used).toEqual(['api-key-111111']);
 	});
 
@@ -60,7 +61,11 @@ describe('buildRequest', () => {
 			resolver,
 		);
 		expect(options.auth).toEqual({ username: 'svc-user-222222', password: 'basic-pass-333333' });
-		expect(used).toEqual(['svc-user-222222', 'basic-pass-333333']);
+		expect(used).toEqual([
+			'svc-user-222222',
+			'basic-pass-333333',
+			Buffer.from('svc-user-222222:basic-pass-333333').toString('base64'),
+		]);
 	});
 
 	it('keeps a plain basic auth username as is', async () => {

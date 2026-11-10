@@ -74,6 +74,9 @@ export async function buildRequest(spec: RequestSpec, resolve: Resolver): Promis
 		json: true,
 		timeout: spec.timeout,
 		returnFullResponse: true,
+		// Never follow redirects: a redirect to another host would carry the
+		// secret headers with it. A 3xx response is reported as an error.
+		disableFollowRedirect: true,
 	};
 
 	switch (spec.authPlacement) {
@@ -91,10 +94,11 @@ export async function buildRequest(spec: RequestSpec, resolve: Resolver): Promis
 			break;
 		}
 		case 'basic': {
-			options.auth = {
-				username: await resolveIfReference(spec.basicUsername),
-				password: await resolveTracked(spec.basicPasswordReference),
-			};
+			const username = await resolveIfReference(spec.basicUsername);
+			const password = await resolveTracked(spec.basicPasswordReference);
+			options.auth = { username, password };
+			// The encoded header value is what an API would echo back, so redact it too.
+			secrets.push(Buffer.from(`${username}:${password}`).toString('base64'));
 			break;
 		}
 		case 'none':

@@ -264,6 +264,30 @@ describe('OnePasswordHttpRequest execute: errors', () => {
 		expect(serialized).not.toContain(TOKEN);
 	});
 
+	it('redacts a secret with quotes from an object error body', async () => {
+		resolveMock.mockImplementation(async () => 'quoted"secret\\value');
+		const error = (await runError({
+			params: baseParams(),
+			httpRequest: httpFailure({ status: 400, data: { echoed: 'quoted"secret\\value' } }),
+		})) as NodeApiError;
+		expect(error.description).toBe(`{"echoed":"${REDACTED}"}`);
+	});
+
+	it('redacts the encoded basic auth header if the API echoes it', async () => {
+		const resolved: Record<string, string> = { 'op://v/basic/password': 'basic-pass-333333' };
+		resolveMock.mockImplementation(async (_token, reference) => resolved[reference]);
+		const encoded = Buffer.from('svc-user:basic-pass-333333').toString('base64');
+		const { items } = await run({
+			params: baseParams({
+				authPlacement: 'basic',
+				basicUsername: 'svc-user',
+				basicPasswordReference: 'op://v/basic/password',
+			}),
+			httpRequest: ok({ headers: { Authorization: `Basic ${encoded}` } }),
+		});
+		expect(items[0].json).toEqual({ headers: { Authorization: `Basic ${REDACTED}` } });
+	});
+
 	it('reads the status from response.statusCode or httpCode', async () => {
 		const fromStatusCode = (await runError({
 			params: baseParams(),

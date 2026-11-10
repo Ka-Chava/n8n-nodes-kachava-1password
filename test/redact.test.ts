@@ -42,4 +42,11 @@ describe('redact', () => {
 		const input = { a: 1 };
 		expect(redactValue(input, [])).toBe(input);
 	});
+
+	it('replaces the JSON-escaped form of a secret', () => {
+		const secret = 'pa"ss\\word';
+		const serialized = JSON.stringify({ key: secret });
+		expect(serialized).not.toContain(secret);
+		expect(redactString(serialized, [secret])).toBe(`{"key":"${REDACTED}"}`);
+	});
 });

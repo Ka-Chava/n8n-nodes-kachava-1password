@@ -6,3 +6,5 @@
 - 1Password Secret node: resolves an `op://` secret reference into an output field.
 - 1Password HTTP Request node: calls an API with a secret placed in a header, query parameter or basic auth, without putting the secret in item data. Redacts resolved secrets from output and errors.
 - Per-process cache for SDK clients (keyed by token hash) and resolved values (default 60 seconds).
+- The HTTP Request node never follows redirects, so secret headers cannot reach another host.
+- Redaction also covers JSON-escaped secrets and the encoded basic auth header.
