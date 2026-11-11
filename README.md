@@ -1,4 +1,4 @@
-# n8n-nodes-kachava-1password
+# @kachava-team/n8n-nodes-1password
 
 n8n community nodes that read secrets from 1Password with a vault-scoped service account. Built for Ka'Chava's self-hosted n8n (Community Edition), where n8n's own External Secrets feature is not available because it requires an Enterprise license.
 

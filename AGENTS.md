@@ -1,7 +1,7 @@
 # n8n community node
 
 ## This project (read first)
-- Package `n8n-nodes-kachava-1password`: reads secrets from 1Password with a
+- Package `@kachava-team/n8n-nodes-1password`: reads secrets from 1Password with a
   service account for Ka'Chava's self-hosted n8n Community Edition. See
   `README.md` for the security model and `HANDOFF.md` for history and open items.
 - Self-hosted only. Cloud lint rules are disabled on purpose and

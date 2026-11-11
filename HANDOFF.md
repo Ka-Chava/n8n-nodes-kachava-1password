@@ -118,7 +118,7 @@ Consider Renovate or Dependabot on `N8N_VERSION` so each release opens a PR that
 The user confirmed route A. This folder is now the package repo, scaffolded with `@n8n/node-cli` 0.55.6 (`programmatic/example` template).
 
 What exists:
-- Package `n8n-nodes-kachava-1password` 0.1.0. Author set to the user's work email. Repository URL assumed to be `github.com/Ka-Chava/n8n-nodes-kachava-1password` (repo not created yet). The user owns the naming and any 1Password trademark question.
+- Package `@kachava-team/n8n-nodes-1password` 0.1.0 (renamed on 2026-11-11 from `n8n-nodes-kachava-1password`, before any publish, so the npm org `kachava-team` owns it; `publishConfig.access` is `public` because scoped packages default to restricted). Author set to the user's work email. Repository URL assumed to be `github.com/Ka-Chava/n8n-nodes-kachava-1password` (repo not created yet). The user owns the naming and any 1Password trademark question.
 - Credential `onePasswordServiceAccountApi` (one password field). Tested through `methods.credentialTest` (lists vaults), because the SDK is not plain HTTP.
 - Node `onePasswordSecret` ("1Password Secret"): resolves an `op://` reference into an output field. Shows a notice that the value lands in execution history.
 - Node `onePasswordHttpRequest` ("1Password HTTP Request"): header, query, basic or no auth; `op://` values in extra headers and query parameters; JSON body; redacts resolved secrets from output and errors; builds a fresh error object so request headers never reach execution data.

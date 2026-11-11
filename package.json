@@ -1,5 +1,5 @@
 {
-	"name": "n8n-nodes-kachava-1password",
+	"name": "@kachava-team/n8n-nodes-1password",
 	"version": "0.1.0",
 	"description": "n8n nodes that read secrets from 1Password with a vault-scoped service account, so workflows never hold the raw credential in n8n.",
 	"license": "MIT",
@@ -29,6 +29,9 @@
 		"test": "vitest run",
 		"release": "n8n-node release",
 		"prepublishOnly": "n8n-node prerelease"
+	},
+	"publishConfig": {
+		"access": "public"
 	},
 	"files": [
 		"dist"
