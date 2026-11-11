@@ -150,6 +150,8 @@ Repository (2026-11-10): `https://github.com/Ka-Chava/n8n-nodes-kachava-1passwor
 
 Security fixes after an automated review (commit `8c6029f`): the HTTP node sets `disableFollowRedirect`, because n8n only manages the `Authorization` header on a cross-origin redirect and a custom secret header would otherwise reach the new host. Redaction now also covers the base64 basic auth value and JSON-escaped secrets, and error bodies are redacted before serializing.
 
+Release (2026-11-11): `@kachava-team/n8n-nodes-1password@0.1.0` published to npm by `publish.yml` (run 43061881876) from tag `0.1.0`, with an SLSA provenance attestation. Integrity `sha512-BbaikNFjuzpQWGBQdFllyqXSIuBjRzVn6gmxCJp+cVheQlD5UiYB2k87QLwAxkn1ayhfcU2DuWm3MlUk2iw/ig==`. The first publish used a short-lived `NPM_TOKEN` secret, because npm requires the package to exist before a trusted publisher can be configured. After that: configure trusted publishing (GitHub Actions, `Ka-Chava` / `n8n-nodes-kachava-1password` / `publish.yml`, allow `npm publish`), delete the `NPM_TOKEN` secret and revoke the token.
+
 Next steps:
 1. User: review the code; decide on the package name and the runtime dependency exception.
 2. User: create a 1Password test vault and a test service account; run a live check (`npm run dev`, or the smoke tests).
