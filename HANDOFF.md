@@ -129,7 +129,7 @@ What exists:
 
 Lint decisions (all documented in `eslint.config.mjs` or next to the code):
 - Cloud support disabled (`configWithoutCloudSupport`, `"strict": false`): Cloud rules forbid importing `@1password/sdk` and `node:crypto`.
-- `no-runtime-dependencies` off for `package.json`: the SDK's ~14 MB WASM core makes bundling fragile. The user should confirm this choice.
+- `no-runtime-dependencies` off for `package.json`: the SDK's ~14 MB WASM core makes bundling fragile. Signed off by the user on 2026-11-11.
 - Per-line suppressions: `op://` reference fields are not passwords; shared helpers rethrow because nodes wrap the errors; `usableAsTool` left out on purpose; the JSON body field is intentionally open-ended.
 - Test fixtures are exempt from `no-hardcoded-secrets`.
 
@@ -154,6 +154,6 @@ Release (2026-11-11): `@kachava-team/n8n-nodes-1password@0.1.0` published to npm
 
 Next steps:
 1. Done 2026-11-11: package name settled (`@kachava-team/n8n-nodes-1password`); live check passed with a test vault and test service account.
-2. Open: the user has not explicitly signed off the `no-runtime-dependencies` lint exception (it shipped in 0.1.0).
+2. Done 2026-11-11: the user signed off the `no-runtime-dependencies` lint exception.
 3. Done 2026-11-11: committed, pushed, 0.1.0 published, trusted publishing set up.
 4. Next, in `~/Sites/n8n`: add `@kachava-team/n8n-nodes-1password` at exactly `0.1.0` to `community-packages/package.json`, regenerate the lock, run `scripts/check-community-packages.py` and its tests, and extend `smoke/` to resolve a dummy secret on every `N8N_VERSION` bump.
