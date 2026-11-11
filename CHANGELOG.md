@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 0.1.0 (2026-11-11)
 
 - 1Password Service Account API credential, tested by listing vaults.
 - 1Password Secret node: resolves an `op://` secret reference into an output field.
